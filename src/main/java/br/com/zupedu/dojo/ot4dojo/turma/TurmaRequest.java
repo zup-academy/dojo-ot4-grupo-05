@@ -21,6 +21,11 @@ public class TurmaRequest {
         this.terminaEm = terminaEm;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+
     public Turma toModel(){
         return new Turma(nome, iniciaEm, terminaEm);
     }

@@ -25,4 +25,6 @@ public class Aluno {
 
     @ManyToOne
     private Turma turma;
+
+
 }
