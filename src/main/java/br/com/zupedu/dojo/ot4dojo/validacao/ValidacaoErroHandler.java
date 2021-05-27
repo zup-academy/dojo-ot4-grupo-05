@@ -24,12 +24,12 @@ public class ValidacaoErroHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({MethodArgumentNotValidException.class})
-    public ResponseEntity<List<ValidacaoErro>> handler(MethodArgumentNotValidException exception) {
+    public CorpoDeErro handler(MethodArgumentNotValidException exception) {
 
         List<ValidacaoErro> erros = exception.getBindingResult().getFieldErrors().stream().map(fieldError ->
                 new ValidacaoErro(fieldError.getField(), fieldError.getDefaultMessage())
         ).collect(Collectors.toList());
 
-        return ResponseEntity.badRequest().body(erros);
+        return new CorpoDeErro(erros);
     }
 }
