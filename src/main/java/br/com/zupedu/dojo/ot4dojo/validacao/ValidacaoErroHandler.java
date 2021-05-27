@@ -26,8 +26,8 @@ public class ValidacaoErroHandler {
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public CorpoDeErro handler(MethodArgumentNotValidException exception) {
 
-        List<ValidacaoErro> erros = exception.getBindingResult().getFieldErrors().stream().map(fieldError ->
-                new ValidacaoErro(fieldError.getField(), fieldError.getDefaultMessage())
+        List<CorpoDeErro.Object> erros = exception.getBindingResult().getFieldErrors().stream().map(fieldError ->
+                new CorpoDeErro.Object(fieldError.getField(), fieldError.getDefaultMessage())
         ).collect(Collectors.toList());
 
         return new CorpoDeErro(erros);
