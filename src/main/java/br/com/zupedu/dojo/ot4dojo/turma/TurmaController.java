@@ -2,6 +2,8 @@ package br.com.zupedu.dojo.ot4dojo.turma;
 
 import java.net.URI;
 import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,14 +20,25 @@ import javax.validation.Valid;
 @RequestMapping("/turmas")
 public class TurmaController {
 
-    @PersistenceContext
-    EntityManager manager;
+    private TurmaRepository turmaRepository;
+
+    @Autowired
+    public TurmaController(TurmaRepository turmaRepository){
+        this.turmaRepository = turmaRepository;
+    }
 
     @PostMapping
     @Transactional
     public ResponseEntity<?> criaTurma(@RequestBody @Valid TurmaRequest request){
+
+        Boolean existe = turmaRepository.existsByNome(request.getNome());
+
+        if(existe){
+            return ResponseEntity.badRequest().body("Já existe!");
+        }
+
         Turma turma = request.toModel();
-        manager.persist(turma);
+        turmaRepository.save(turma);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
                 .buildAndExpand(turma.getId()).toUri();
         return ResponseEntity.created(uri).body(new TurmaResponse(turma));

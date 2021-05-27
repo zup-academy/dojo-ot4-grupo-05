@@ -21,6 +21,6 @@ public class ValidacaoErroHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public List<ValidacaoErro> handler(MethodArgumentNotValidException exception) {
-        List<FieldError> fieldErrors = exception.
+        //List<FieldError> fieldErrors = exception.
     }
 }
