@@ -17,16 +17,16 @@ public class CorpoDeErro {
 
     static class Object {
 
-        private String campo;
+        private String code;
         private String mensagem;
 
         public Object(String campo, String mensagem) {
-            this.campo = campo;
+            this.code = campo;
             this.mensagem = mensagem;
         }
 
-        public String getCampo() {
-            return campo;
+        public String getCode() {
+            return code;
         }
 
         public String getMensagem() {

@@ -1,9 +1,8 @@
 package br.com.zupedu.dojo.ot4dojo.avaliacao;
 
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
 
 public class AvaliacaoRequest {
 
@@ -23,4 +22,9 @@ public class AvaliacaoRequest {
     public String getDescricao() {
         return descricao;
     }
+
+	public Avaliacao toModel() {
+		return new Avaliacao(titulo, descricao);
+		
+	}
 }
