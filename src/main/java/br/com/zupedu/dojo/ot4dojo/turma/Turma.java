@@ -27,5 +27,19 @@ public class Turma {
         this.terminaEm = terminaEm;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public LocalDate getIniciaEm() {
+        return iniciaEm;
+    }
+
+    public LocalDate getTerminaEm() {
+        return terminaEm;
+    }
 }
