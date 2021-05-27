@@ -32,8 +32,9 @@ public class TurmaController {
     public ResponseEntity<?> criaTurma(@RequestBody @Valid TurmaRequest request){
 
         Boolean existe = turmaRepository.existsByNome(request.getNome());
+        boolean existeData = turmaRepository.existsByIniciaEm(request.getIniciaEm());
 
-        if(existe){
+        if(existe || existeData){
             return ResponseEntity.badRequest().body("Já existe!");
         }
 
