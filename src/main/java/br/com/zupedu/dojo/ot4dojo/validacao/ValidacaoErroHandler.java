@@ -3,6 +3,7 @@ package br.com.zupedu.dojo.ot4dojo.validacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestControllerAdvice
@@ -22,12 +24,12 @@ public class ValidacaoErroHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({MethodArgumentNotValidException.class})
-    public List<ValidacaoErro> handler(MethodArgumentNotValidException exception) {
-        
-    	List<ValidacaoErro> erros = new ArrayList<>();
-    	
-    	List<FieldError> fileErrors = exception.getBindingResult().getFieldErrors();
-    	
-    	List<ObjectError> objecErrors;
+    public ResponseEntity<List<ValidacaoErro>> handler(MethodArgumentNotValidException exception) {
+
+        List<ValidacaoErro> erros = exception.getBindingResult().getFieldErrors().stream().map(fieldError ->
+                new ValidacaoErro(fieldError.getField(), fieldError.getDefaultMessage())
+        ).collect(Collectors.toList());
+
+        return ResponseEntity.badRequest().body(erros);
     }
 }
